@@ -1,0 +1,24 @@
+{
+  "name": "gamestore-ecommerce",
+  "version": "1.0.0",
+  "description": "Complete GameStore e-commerce application with React frontend and Express backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently --names \"backend,frontend\" --prefix-colors \"blue,green\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:webhook": "concurrently --names \"backend,webhook\" --prefix-colors \"blue,red\" \"npm run dev:backend\" \"stripe listen --forward-to localhost:5000/api/payments/webhook\"",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start",
+    "db:setup": "cd backend && npm run db:migrate && npm run db:seed",
+    "db:reset": "cd backend && npm run db:reset",
+    "test:webhook": "cd backend && node test-webhook.js"
+  },
+  "keywords": ["ecommerce", "gamestore", "react", "express", "postgresql"],
+  "author": "GameStore Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 

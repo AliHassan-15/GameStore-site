@@ -1,0 +1,249 @@
+Create a GameStore e-commerce application using the same tech stack 
+
+Backend: Express.js + PostgreSQL + Sequelize
+Frontend: React (TSX) + Vite + Tailwind CSS + Shadcn UI
+Animations: Framer-motion
+
+Core Features:
+- User authentication (Admin/Buyer roles) -> While creating account optional take Payment details, address shipping buyer can enter else also this can skip i.e add later
+- Product management (CRUD with categories/subcategories) (ordering of products by ShadcnUI Dropdown by sorting options
+- Shopping cart and checkout
+- Order management
+- Stripe payment integration
+- Stock Qty Mangement 
+- Admin can see each product details on clicking it show details when new stock added 
+when it sell and how much Qty etc .. and moreeee...
+- Reviews and ratings
+- Admin dashboard if login person is admin than show admin button only for admin and on clicking show porper admin dashboard
+- while adding new product to store by admin add upload the product pic option too to uploads the pics
+- While adding new product from admin panel show all categories and ssub categories and these categorize import form excel sheet and also add and maintain excel sheet for categories, sub-categories
+- Search and filtering
+- Activity logging
+- Sessions Cookies + Passport Google AuthO + Passport Local using redis store
+
+Start with the database models and basic authentication, then build the product management system.
+
+
+DRAFT : (E-commerce site
+- Admin, Buyers
+- Admin can add new products
+- Buyer signup (can enter card details here, billing details) 
+- Products list
+- Buyers can buy
+- Orders, items, stocks, categories (Admin will define -sub categories)
+- Buyers search (price range, categories, sub categories, search)
+-  Logs of items like when stock decreased, added new stock)
+- Reviews and feedback
+- GITHUB - repo
+- Stripe integration testing
+)
+
+## Objective
+Build a complete Game products store E-Commerce website from scratch with both Frontend and Backend functionality. This project is designed to test your understanding of full-stack development, including database modeling, authentication, authorization, UI/UX, and API design.
+
+## User Roles
+
+### Buyer
+
+- Can sign up, log in, and log out.
+- Onboarding flow:
+  - Ask for shipping address
+  - Ask for credit card information
+  - If skipped, ask again during checkout
+- Can browse products without login
+- Must be logged in to:
+  - Add to cart
+  - Checkout
+  - View order history
+  - Leave reviews
+- Can:
+  - Search, filter, and paginate products
+  - Add/remove products from cart
+  - Place orders (Stripe test payment)
+  - Cancel unshipped orders
+  - View past orders and statuses
+  - Leave reviews after receiving items
+
+### Admin
+
+- Can log in and access an admin dashboard
+- Can:
+  - Add/edit/delete products
+  - Refill product stock
+  - View product statistics (sales, reviews, inventory)
+  - View inventory transaction logs
+  - View and manage all user orders
+    - Mark as shipped
+    - Mark as delivered
+  - Can create a new category
+
+---
+
+## Product & Order Interactions
+
+### Product
+
+- Viewable by any user
+- Displays:
+  - Name
+  - Price
+  - Category
+  - Stock status
+  - Reviews
+- Can be reviewed only by users who have purchased and received the product
+
+### Cart & Orders
+
+- Buyers can:
+  - Add or remove items from cart
+  - Checkout using Stripe (test mode)
+  - Cancel orders that are not yet shipped
+- Admin can:
+  - Update order status (shipped, delivered)
+
+---
+
+## Bonus Features
+
+- Simulate order processing using a background service (e.g., cron job):
+  - Automatically update order status after a delay (5–10 minutes)
+- Admin analytics dashboard with visual data
+  - Graphs and stuff (you're free to use your own ideas here)
+
+---
+
+## Backend (ExpressJS)
+
+### Stack
+
+- ExpressJS
+- PostgreSQL
+- Sequelize ORM
+- Redis
+- JWT Authentication
+- Joi Validation
+- Stripe Integration (Test Mode)
+
+### Required Tables
+
+- `users` (with roles)
+- `products`
+- `categories`
+- `orders`
+- `order_items`
+- `cart_items`
+- `reviews`
+- `inventory_transactions`
+.... (add accoridng to requiments)
+
+Add other tables as needed.
+
+### Requirements
+
+- JWT Authentication & Authorization
+- Role-Based Access Control
+- Stripe payment integration
+- Stock management
+- Order lifecycle management
+- Joi schema validation
+- Redis for caching or rate limiting
+- Proper project structure and coding practices
+
+---
+
+## Frontend (ReactJS)
+
+### Stack
+
+- ReactJS
+- React Router
+- Axios
+- Zustand or Context API
+- ShadCN UI / TailwindCSS
+- Stripe (Frontend integration)
+
+### Requirements
+
+- Responsive design
+- Role-Based Access Control for routing
+- Public and protected routes
+- Error pages:
+  - 404 (Page not found)
+  - 403 (Forbidden)
+- Product listing with:
+  - Pagination
+  - Filters
+  - Text search
+- Category creation page
+- Add to cart
+- Checkout flow
+- Review system
+- Global state management
+- Token-based session persistence
+
+---
+
+## Project Expectations
+
+- Clean and modular folder structure
+- Reusable components
+- API integration with loading and error states
+- Secure admin routes
+- Environment-based configurations
+- Clear and helpful README
+
+---
+
+## Submission Guidelines
+
+- GitHub repository with:
+  - Setup instructions
+  - Demo credentials (buyer and admin)
+  - Postman collection or API documentation
+- Fully functional frontend and backend
+- Stripe test mode working end-to-end
+
+---
+
+ADD FEATURE ACCORIDNG TO PORPER FULL FUNCITONAL E-COMMERNCE APP
+
+CHATBOT-AGENT ANSWER:
+
+I understand your project requirements completely! Let me summarize what I've grasped:
+Project Overview
+You want to build a GameStore e-commerce application with the following tech stack:
+Backend: Express.js + PostgreSQL + Sequelize + Redis + JWT + Stripe (session cookies redis access/refreah tokens Implementation)
+Frontend: React (TSX) + Vite + Tailwind CSS + Shadcn UI + Framer Motion
+Core Features I Understand:
+User Management
+Authentication: Admin/Buyer roles with Passport Google OAuth + Local + Redis sessions
+Buyer Onboarding: Optional payment details & shipping address during signup (can skip and add later)
+Admin Dashboard: Only visible to admin users with proper role-based access
+Product Management
+CRUD Operations: Full product management with categories/subcategories
+Image Upload: Admin can upload product pictures
+Excel Integration: Import categories/subcategories from Excel sheets
+Stock Management: Real-time stock tracking with detailed logs
+Product Details: Admin can view detailed product analytics (sales, stock changes, etc.)
+Shopping Experience
+Product Listing: With Shadcn UI dropdown sorting, search, filtering
+Shopping Cart: Add/remove items, checkout flow
+Reviews & Ratings: After purchase completion
+Order Management: Full order lifecycle
+Payment & Analytics
+Stripe Integration: Test mode payment processing
+Activity Logging: Comprehensive system logs
+Admin Analytics: Dashboard with visual data and graphs
+Additional Features
+Search & Filtering: Advanced product discovery
+Order Processing: Background service simulation
+Responsive Design: Mobile-friendly interface
+Error Handling: 404, 403 pages
+Database Structure
+I understand the need for tables like: users, products, categories, orders, order_items, cart_items, reviews, inventory_transactions, etc.
+Development Approach
+Start with database models and authentication
+Build product management system
+Implement full e-commerce functionality
+Add bonus features like background processing
+OKKKKK - I understand everything clearly and am ready to start building this comprehensive GameStore e-commerce application!
