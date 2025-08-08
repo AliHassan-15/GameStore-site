@@ -6,8 +6,8 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Save } from 'lucide-react';
-import { productsAPI, categoriesAPI } from '@/lib/api';
+import { ArrowLeft, Save, Upload, X } from 'lucide-react';
+import { productsAPI, categoriesAPI, uploadAPI } from '@/lib/api';
 import { Category } from '@/types';
 
 const productSchema = z.object({
@@ -34,6 +34,8 @@ export const AdminProductFormPage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -83,19 +85,56 @@ export const AdminProductFormPage: React.FC = () => {
         setValue('isFeatured', product.isFeatured);
         setValue('isDigital', product.isDigital);
         setValue('isPhysical', product.isPhysical);
+        
+        // Load existing images
+        if (product.images && product.images.length > 0) {
+          setUploadedImages(product.images.map((img: any) => img.imageUrl));
+        }
       }
     } catch (error) {
       console.error('Failed to load product:', error);
     }
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    try {
+      setIsUploading(true);
+      const formData = new FormData();
+      Array.from(files).forEach((file) => {
+        formData.append('images', file);
+      });
+
+      const response = await uploadAPI.uploadProductImages(Array.from(files));
+      if (response.success && response.data) {
+        const newImages = response.data.images.map((img: any) => img.path || img.imageUrl);
+        setUploadedImages(prev => [...prev, ...newImages]);
+      }
+    } catch (error) {
+      console.error('Failed to upload images:', error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const removeImage = (index: number) => {
+    setUploadedImages(prev => prev.filter((_, i) => i !== index));
+  };
+
   const onSubmit = async (data: ProductFormData) => {
     try {
       setIsLoading(true);
+      const productData = {
+        ...data,
+        images: uploadedImages
+      };
+
       if (isEditing && id) {
-        await productsAPI.updateProduct(id, data);
+        await productsAPI.updateProduct(id, productData);
       } else {
-        await productsAPI.createProduct(data);
+        await productsAPI.createProduct(productData);
       }
       navigate('/admin/products');
     } catch (error) {
@@ -258,6 +297,63 @@ export const AdminProductFormPage: React.FC = () => {
           </Card>
         </div>
 
+        {/* Image Upload */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Product Images</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Upload Images</label>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  id="image-upload"
+                  disabled={isUploading}
+                />
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
+                  <p className="text-sm text-gray-600">
+                    {isUploading ? 'Uploading...' : 'Click to upload images or drag and drop'}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    PNG, JPG, GIF up to 10MB each
+                  </p>
+                </label>
+              </div>
+            </div>
+
+            {/* Display uploaded images */}
+            {uploadedImages.length > 0 && (
+              <div>
+                <label className="block text-sm font-medium mb-2">Uploaded Images</label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {uploadedImages.map((imageUrl, index) => (
+                    <div key={index} className="relative group">
+                      <img
+                        src={imageUrl}
+                        alt={`Product image ${index + 1}`}
+                        className="w-full h-32 object-cover rounded-lg"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(index)}
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
         {/* Product Settings */}
         <Card>
           <CardHeader>
@@ -325,7 +421,7 @@ export const AdminProductFormPage: React.FC = () => {
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isLoading}>
+          <Button type="submit" disabled={isLoading || isUploading}>
             <Save className="w-4 h-4 mr-2" />
             {isLoading ? 'Saving...' : (isEditing ? 'Update Product' : 'Create Product')}
           </Button>
