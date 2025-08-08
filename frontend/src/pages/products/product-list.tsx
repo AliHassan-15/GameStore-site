@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Search, Filter, Star, ShoppingCart } from 'lucide-react';
+import { Search, Filter, ShoppingCart } from 'lucide-react';
 import { productsAPI } from '@/lib/api';
 import { Product } from '@/types';
 import { formatPrice, getRatingStars } from '@/lib/utils';
@@ -16,7 +16,7 @@ export const ProductListPage: React.FC = () => {
     categoryId: '',
     minPrice: '',
     maxPrice: '',
-    sortBy: 'createdAt',
+    sortBy: 'createdAt' as 'name' | 'price' | 'rating' | 'createdAt' | 'soldCount',
     sortOrder: 'desc' as 'asc' | 'desc'
   });
 
@@ -29,7 +29,11 @@ export const ProductListPage: React.FC = () => {
       setIsLoading(true);
       const response = await productsAPI.getProducts({
         search: searchQuery,
-        ...filters,
+        categoryId: filters.categoryId,
+        minPrice: filters.minPrice ? parseFloat(filters.minPrice) : undefined,
+        maxPrice: filters.maxPrice ? parseFloat(filters.maxPrice) : undefined,
+        sortBy: filters.sortBy,
+        sortOrder: filters.sortOrder,
         limit: 20
       });
       
@@ -98,7 +102,7 @@ export const ProductListPage: React.FC = () => {
           
           <select
             value={filters.sortBy}
-            onChange={(e) => setFilters(prev => ({ ...prev, sortBy: e.target.value }))}
+            onChange={(e) => setFilters(prev => ({ ...prev, sortBy: e.target.value as 'name' | 'price' | 'rating' | 'createdAt' | 'soldCount' }))}
             className="px-3 py-2 border rounded-md text-sm"
           >
             <option value="createdAt">Latest</option>

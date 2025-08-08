@@ -3,17 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { motion } from 'framer-motion';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
   CreditCard, 
   MapPin, 
-  Truck, 
   CheckCircle, 
   ArrowLeft,
-  Lock,
   Shield
 } from 'lucide-react';
 import { useCart } from '@/contexts/cart-context';
@@ -49,7 +47,7 @@ export const CheckoutPage: React.FC = () => {
   
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep] = useState(1);
 
   const {
     register,
@@ -90,11 +88,7 @@ export const CheckoutPage: React.FC = () => {
 
       // Create order
       const orderData = {
-        items: items.map(item => ({
-          productId: item.product.id,
-          quantity: item.quantity,
-          price: item.price
-        })),
+        items: items.map(item => item.id), // Pass cart item IDs
         shippingAddress: {
           street: data.address,
           city: data.city,
@@ -102,13 +96,16 @@ export const CheckoutPage: React.FC = () => {
           zipCode: data.zipCode,
           country: data.country,
         },
-        paymentMethod: {
-          cardNumber: data.cardNumber,
-          cardExpiry: data.cardExpiry,
-          cardCvc: data.cardCvc,
-          cardName: data.cardName,
+        billingAddress: {
+          street: data.address,
+          city: data.city,
+          state: data.state,
+          zipCode: data.zipCode,
+          country: data.country,
         },
-        total: summary?.total || 0,
+        customerEmail: data.email,
+        customerPhone: data.phone,
+        notes: `Payment method: ${data.cardName}`
       };
 
       const orderResponse = await ordersAPI.createOrder(orderData);

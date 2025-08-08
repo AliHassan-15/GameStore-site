@@ -13,10 +13,8 @@ import {
   LogOut,
   Settings,
   Package,
-  FileText,
   Star
 } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();

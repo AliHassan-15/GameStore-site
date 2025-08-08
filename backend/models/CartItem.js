@@ -62,20 +62,7 @@ module.exports = (sequelize) => {
   }, {
     tableName: 'cart_items',
     timestamps: true,
-    indexes: [
-      {
-        fields: ['userId']
-      },
-      {
-        fields: ['productId']
-      },
-      {
-        fields: ['sessionId']
-      },
-      {
-        fields: ['expiresAt']
-      }
-    ]
+
   });
 
   // Instance methods

@@ -201,16 +201,16 @@ module.exports = (sequelize) => {
         fields: ['sku']
       },
       {
-        fields: ['categoryId']
+        fields: ['category_id']
       },
       {
-        fields: ['subcategoryId']
+        fields: ['subcategory_id']
       },
       {
-        fields: ['isActive']
+        fields: ['is_active']
       },
       {
-        fields: ['isFeatured']
+        fields: ['is_featured']
       },
       {
         fields: ['platform']

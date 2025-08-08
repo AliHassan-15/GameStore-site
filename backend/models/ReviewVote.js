@@ -42,17 +42,17 @@ module.exports = (sequelize) => {
     timestamps: true,
     indexes: [
       {
-        fields: ['reviewId']
+        fields: ['review_id']
       },
       {
-        fields: ['userId']
+        fields: ['user_id']
       },
       {
-        fields: ['voteType']
+        fields: ['vote_type']
       },
       {
         unique: true,
-        fields: ['reviewId', 'userId']
+        fields: ['review_id', 'user_id']
       }
     ]
   });

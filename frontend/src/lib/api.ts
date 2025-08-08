@@ -14,7 +14,6 @@ import {
   ProductForm,
   CategoryForm,
   ReviewForm,
-  PaymentIntent,
   StripePaymentMethod,
   DashboardStats,
   SalesAnalytics,
@@ -25,7 +24,7 @@ import {
 
 // Create axios instance
 const api: AxiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://localhost:5000/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

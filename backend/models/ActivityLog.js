@@ -121,25 +121,25 @@ module.exports = (sequelize) => {
     timestamps: true,
     indexes: [
       {
-        fields: ['userId']
+        fields: ['user_id']
       },
       {
         fields: ['action']
       },
       {
-        fields: ['entityType']
+        fields: ['entity_type']
       },
       {
-        fields: ['entityId']
+        fields: ['entity_id']
       },
       {
-        fields: ['createdAt']
+        fields: ['created_at']
       },
       {
         fields: ['severity']
       },
       {
-        fields: ['ipAddress']
+        fields: ['ip_address']
       }
     ]
   });

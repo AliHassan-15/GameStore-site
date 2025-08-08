@@ -100,10 +100,10 @@ module.exports = (sequelize) => {
     timestamps: true,
     indexes: [
       {
-        fields: ['orderId']
+        fields: ['order_id']
       },
       {
-        fields: ['productId']
+        fields: ['product_id']
       },
       {
         fields: ['status']

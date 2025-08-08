@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Search, Users, UserCheck, UserX, Mail, Phone } from 'lucide-react';
+import { Search, Users, UserCheck, UserX } from 'lucide-react';
 import { usersAPI } from '@/lib/api';
 import { User } from '@/types';
 import { formatDate } from '@/lib/utils';

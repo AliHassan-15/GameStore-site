@@ -103,13 +103,13 @@ module.exports = (sequelize) => {
     timestamps: true,
     indexes: [
       {
-        fields: ['userId']
+        fields: ['user_id']
       },
       {
-        fields: ['productId']
+        fields: ['product_id']
       },
       {
-        fields: ['orderId']
+        fields: ['order_id']
       },
       {
         fields: ['rating']
@@ -118,7 +118,7 @@ module.exports = (sequelize) => {
         fields: ['status']
       },
       {
-        fields: ['createdAt']
+        fields: ['created_at']
       }
     ]
   });

@@ -9,6 +9,10 @@ module.exports = {
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
     logging: console.log,
+    define: {
+      timestamps: true,
+      underscored: true
+    },
     pool: {
       max: 5,
       min: 0,

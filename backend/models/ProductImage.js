@@ -71,16 +71,16 @@ module.exports = (sequelize) => {
     timestamps: true,
     indexes: [
       {
-        fields: ['productId']
+        fields: ['product_id']
       },
       {
-        fields: ['isMain']
+        fields: ['is_main']
       },
       {
-        fields: ['sortOrder']
+        fields: ['sort_order']
       },
       {
-        fields: ['isActive']
+        fields: ['is_active']
       }
     ]
   });

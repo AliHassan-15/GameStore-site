@@ -6,9 +6,9 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Save, Upload } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 import { productsAPI, categoriesAPI } from '@/lib/api';
-import { Product, Category } from '@/types';
+import { Category } from '@/types';
 
 const productSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -35,7 +35,7 @@ export const AdminProductFormPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<ProductFormData>({
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       isActive: true,

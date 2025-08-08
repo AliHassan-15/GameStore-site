@@ -195,7 +195,7 @@ export function getImageUrl(path: string): string {
   if (path.startsWith('http')) {
     return path;
   }
-  return `${import.meta.env.VITE_API_URL || ''}${path}`;
+  return `${(import.meta as any).env?.VITE_API_URL || 'http://localhost:5000'}${path}`;
 }
 
 export function copyToClipboard(text: string): Promise<void> {

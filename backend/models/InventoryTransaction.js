@@ -140,22 +140,22 @@ module.exports = (sequelize) => {
     timestamps: true,
     indexes: [
       {
-        fields: ['productId']
+        fields: ['product_id']
       },
       {
-        fields: ['userId']
+        fields: ['user_id']
       },
       {
-        fields: ['orderId']
+        fields: ['order_id']
       },
       {
-        fields: ['transactionType']
+        fields: ['transaction_type']
       },
       {
-        fields: ['createdAt']
+        fields: ['created_at']
       },
       {
-        fields: ['referenceNumber']
+        fields: ['reference_number']
       },
       {
         fields: ['location']

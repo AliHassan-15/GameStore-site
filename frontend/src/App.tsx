@@ -1,5 +1,5 @@
-import {  } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+// React import removed as it's not needed in modern React
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -24,7 +24,7 @@ import { SearchPage } from '@/pages/search';
 import { ProfilePage } from '@/pages/profile';
 import { OrdersPage } from '@/pages/orders';
 import { CartPage } from '@/pages/cart';
-import { CheckoutPage } from '@/pages/checkout/checkout';
+import { CheckoutPage } from '@/pages/checkout';
 
 // Admin Pages
 import { AdminDashboardPage } from '@/pages/admin/dashboard';

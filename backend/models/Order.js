@@ -169,22 +169,22 @@ module.exports = (sequelize) => {
     indexes: [
       {
         unique: true,
-        fields: ['orderNumber']
+        fields: ['order_number']
       },
       {
-        fields: ['userId']
+        fields: ['user_id']
       },
       {
         fields: ['status']
       },
       {
-        fields: ['paymentStatus']
+        fields: ['payment_status']
       },
       {
-        fields: ['createdAt']
+        fields: ['created_at']
       },
       {
-        fields: ['stripePaymentIntentId']
+        fields: ['stripe_payment_intent_id']
       }
     ]
   });

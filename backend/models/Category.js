@@ -59,10 +59,10 @@ module.exports = (sequelize) => {
         fields: ['slug']
       },
       {
-        fields: ['parentId']
+        fields: ['parent_id']
       },
       {
-        fields: ['isActive']
+        fields: ['is_active']
       }
     ]
   });

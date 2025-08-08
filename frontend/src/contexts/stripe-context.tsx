@@ -33,7 +33,7 @@ export const StripeProvider: React.FC<StripeProviderProps> = ({ children }) => {
         setIsLoading(true);
         setError(null);
         
-        const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+        const publishableKey = (import.meta as any).env?.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder';
         
         if (!publishableKey) {
           throw new Error('Stripe publishable key is not configured');

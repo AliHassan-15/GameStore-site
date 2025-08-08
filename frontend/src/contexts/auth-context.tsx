@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authAPI } from '@/lib/api';
+import { authAPI, usersAPI } from '@/lib/api';
 import { User } from '@/types';
 import { useAuthStore } from '@/store';
 import { toast } from '@/store';
@@ -17,6 +17,7 @@ interface AuthContextType {
   resetPassword: (token: string, password: string) => Promise<void>;
   verifyEmail: (token: string) => Promise<void>;
   resendVerification: () => Promise<void>;
+  updateProfile: (data: Partial<User>) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -207,6 +208,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const updateProfile = async (data: Partial<User>) => {
+    try {
+      setLoading(true);
+      const response = await usersAPI.updateProfile(data);
+      
+      if (response.success && response.data) {
+        setUser(response.data);
+        toast.success('Profile updated successfully!');
+      } else {
+        throw new Error(response.message || 'Failed to update profile');
+      }
+    } catch (error: any) {
+      toast.error('Failed to update profile', error.message);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value: AuthContextType = {
     user,
     isAuthenticated,
@@ -219,6 +239,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     resetPassword,
     verifyEmail,
     resendVerification,
+    updateProfile,
   };
 
   return (
